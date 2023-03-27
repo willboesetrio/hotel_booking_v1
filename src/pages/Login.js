@@ -8,6 +8,7 @@ function Login() {
     let [userEmail, setUserEmail] = useState('');
     let [userRole, setUserRole] = useState('');
     let [loggedIn, setLoggedIn] = useState(false);
+    let [invalidLogin, setInvalidLogin] = useState(false);
 
     const postLogin = async() => {
         const postObject = {
@@ -22,16 +23,20 @@ function Login() {
           },
           body : JSON.stringify(postObject)
         })
+        
+        if(response.ok) {
+
         const myToken = await response.json();
+        
         console.log(myToken.token);
-        // this is setting token to state, we want it in session storage
-        //setCurrentToken(myToken.token);
         const user = JSON.parse(atob(myToken.token.split('.')[1]));
         console.log(user);
         sessionStorage.setItem("token", myToken.token)
-        setLoggedIn(true);
-        setUserEmail(user.sub);
-        setUserRole(user.roles);
+        setLoggedIn(true); setUserEmail(user.sub); setUserRole(user.roles); setInvalidLogin(false);
+        } else {
+            console.log("INVALID LOGIN ATTEMPT")
+            setInvalidLogin(true);
+        }
       }
 
 
@@ -51,8 +56,14 @@ function Login() {
         <br />
         <br />
         {loggedIn && <div>
+            <p>User is logged in as:</p>
           <p>Email: {userEmail}</p><p>Role: {userRole}</p>
-          </div>}
+          </div>
+        }
+        {invalidLogin && <div>
+            <p>Invalid email or password</p></div>
+        }
+        
       </div>
     </div>
   )
