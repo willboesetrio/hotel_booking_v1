@@ -1,49 +1,12 @@
 import { useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
 
-function Login() {
+function Login({login}) {
 
-    const emailRef = useRef();
-    const passwordRef = useRef();
-    //let [currentToken, setCurrentToken] = useState('');//store token in session storage, not state
-    let [userEmail, setUserEmail] = useState('');
-    let [userRole, setUserRole] = useState('');
-    let [loggedIn, setLoggedIn] = useState(false);
-    let [invalidLogin, setInvalidLogin] = useState(false);
-    let navigate = useNavigate();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
-    const postLogin = async() => {
-        const postObject = {
-          "email" : emailRef.current.value,
-          "password" : passwordRef.current.value
-        }
-        const response = await fetch("http://localhost:8080/login", {
-          method : "POST",
-          //credentials: 'same-origin',//not the right credentials, but include does not work
-          headers : {
-            "Content-Type": "application/json",
-          },
-          body : JSON.stringify(postObject)
-        })
-        
-        if(response.ok) {
 
-        const myToken = await response.json();
-        
-        console.log(myToken.token);
-        const user = JSON.parse(atob(myToken.token.split('.')[1]));
-        console.log(user);
-        sessionStorage.setItem("token", myToken.token)
-        //maybe i don't need the setState calls/variables below, when user is logged in an redirected we can get their
-        //information and permissions from session storage?
-        setLoggedIn(true); setUserEmail(user.sub); setUserRole(user.roles); setInvalidLogin(false);
-        navigate("/reservations");
-
-        } else {
-            console.log("INVALID LOGIN ATTEMPT")
-            setInvalidLogin(true);
-        }
-      }
+    
 
 
   return (
@@ -51,22 +14,13 @@ function Login() {
       <div>
         <p>Login</p>
         <label htmlFor='email'>Email</label>
-        <input type="text" id='email' ref={emailRef} required></input>
+        <input type="text" id='email' onChange={e => setEmail(e.target.value)} value={email} required></input>
         <br /><br />
         <label htmlFor='password'>Password</label>
-        <input type="text" id='password' ref={passwordRef} required></input>
+        <input type="text" id='password' onChange={e => setPassword(e.target.value)} value={password} required></input>
         <br /><br />
-        <button onClick={postLogin}>LOGIN</button>
+        <button onClick={() => login(email, password)}>LOGIN</button>
         <br /><br />
-        {loggedIn && <div>
-            <p>User is logged in as:</p>
-          <p>Email: {userEmail}</p><p>Role: {userRole}</p>
-          </div>
-        }
-        {invalidLogin && <div>
-            <p>Invalid email or password</p></div>
-        }
-        
       </div>
     </div>
   )

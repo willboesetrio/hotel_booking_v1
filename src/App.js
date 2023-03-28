@@ -1,31 +1,47 @@
 import './App.css';
-import { useRef, useState } from 'react';
+import { useRef, useState, useCallback } from 'react';
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Login from './pages/Login';
 import Reservations from './pages/Reservations';
 import RoomTypes from './pages/RoomTypes';
 import NotFound from './pages/NotFound';
+import useLogin from './hooks/useLogin';
+
 
 function App() {
 
+  const {isLogged, login, logout} = useLogin();
+
   //const [user, setUser] = useState(JSON.parse(sessionStorage.getItem('user')));
+  const [userRole, setUserRole] = useState("");
+
+  const handleUserRole = (newRole) => {
+    setUserRole(newRole);
+    console.log("this function was passed down as a prop then called from the login component");
+  }
+  // const memoizedHandleClick = useCallback(
+  //   () => {
+  //     console.log('Click happened');
+  //   },
+  //   [], // Tells React to memoize regardless of arguments.
+  // );
+  
 
   return (
-    <BrowserRouter>
+    
     <div className="App">
       <div>
-        <Navbar />
-        
-        <Routes>
-          <Route path="/" element={<Login />} />
+        <Navbar logout={logout} userRole={userRole}/>
+        {isLogged ? <Routes>
           <Route path="/reservations" element={<Reservations />} />
           <Route path="/room-types" element={<RoomTypes />} />
           <Route path="*" element={<NotFound />} />
-        </Routes>
+        </Routes> : <Login  login={login} handleUserRole={handleUserRole} />
+        }
+        
       </div>
     </div>
-    </BrowserRouter>
   );
 }
 
