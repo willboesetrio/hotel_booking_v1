@@ -1,8 +1,18 @@
 import React from 'react'
 import styles from './Navbar.module.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
+//ideally we would reserve our user permissions as props passed down from the main component,
+//then conditionally render certain links based on user permissions
 function Navbar() {
+
+  const navigate = useNavigate();
+
+  const handleLogOut = () => {
+    sessionStorage.removeItem("token");
+    navigate("/");
+  }
+
   return (
     <nav className={styles.navigation}>
       <h1 className={styles.companyName}>Hotel Bookings</h1>
@@ -13,16 +23,13 @@ function Navbar() {
         successful login redirects to login page,
         logout clears the user from the current state and session storage and redirects to login page*/}
       <li className={styles.item}>
-        <Link to='/' className={styles.link}>Login</ Link>
-      </li>
-      <li className={styles.item}>
         <Link to='/reservations' className={styles.link}>Reservations</ Link>
       </li>
       <li className={styles.item}>
         <Link to='/room-types' className={styles.link}>Room Types</ Link>
       </li>
       <li className={styles.item}>
-        Log Out
+        <Link to='/' onClick={handleLogOut} className={styles.link}>Log Out</ Link>
       </li>
       </ul>
     </nav>

@@ -1,4 +1,5 @@
-import { useState, useRef} from 'react';
+import { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
 
@@ -9,6 +10,7 @@ function Login() {
     let [userRole, setUserRole] = useState('');
     let [loggedIn, setLoggedIn] = useState(false);
     let [invalidLogin, setInvalidLogin] = useState(false);
+    let navigate = useNavigate();
 
     const postLogin = async() => {
         const postObject = {
@@ -32,7 +34,11 @@ function Login() {
         const user = JSON.parse(atob(myToken.token.split('.')[1]));
         console.log(user);
         sessionStorage.setItem("token", myToken.token)
+        //maybe i don't need the setState calls/variables below, when user is logged in an redirected we can get their
+        //information and permissions from session storage?
         setLoggedIn(true); setUserEmail(user.sub); setUserRole(user.roles); setInvalidLogin(false);
+        navigate("/reservations");
+
         } else {
             console.log("INVALID LOGIN ATTEMPT")
             setInvalidLogin(true);
@@ -46,15 +52,12 @@ function Login() {
         <p>Login</p>
         <label htmlFor='email'>Email</label>
         <input type="text" id='email' ref={emailRef} required></input>
-        <br />
-        <br />
+        <br /><br />
         <label htmlFor='password'>Password</label>
         <input type="text" id='password' ref={passwordRef} required></input>
-        <br />
-        <br />
+        <br /><br />
         <button onClick={postLogin}>LOGIN</button>
-        <br />
-        <br />
+        <br /><br />
         {loggedIn && <div>
             <p>User is logged in as:</p>
           <p>Email: {userEmail}</p><p>Role: {userRole}</p>
