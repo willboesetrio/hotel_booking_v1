@@ -20,19 +20,13 @@ function App() {
     setUserRole(newRole);
     console.log("this function was passed down as a prop then called from the login component");
   }
-  // const memoizedHandleClick = useCallback(
-  //   () => {
-  //     console.log('Click happened');
-  //   },
-  //   [], // Tells React to memoize regardless of arguments.
-  // );
   
 
   return (
     
     <div className="App">
       <div>
-        <Navbar logout={logout} userRole={userRole}/>
+        <Navbar logout={logout} isLogged={isLogged} userRole={userRole}/>
         {isLogged ? <Routes>
           <Route path="/reservations" element={<Reservations />} />
           <Route path="/room-types" element={<RoomTypes />} />

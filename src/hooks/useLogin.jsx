@@ -9,10 +9,8 @@ function useLogin() {
 
   const login = async(email, password) => {
 
-
       const response = await fetch("http://localhost:8080/login", {
         method : "POST",
-        //credentials: 'same-origin',//not the right credentials, but include does not work
         headers : {
           "Content-Type": "application/json",
         },
@@ -30,7 +28,6 @@ function useLogin() {
 
       } else {
           console.log("INVALID LOGIN ATTEMPT")
-          //setInvalidLogin(true);
       }
     }
 

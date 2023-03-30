@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import styles from "./Reservations.module.css"
 
 
@@ -10,10 +10,8 @@ function Reservations() {
     //this console log happens twice initially(maybe due to strict mode), then way too many times(onRerender?)
     console.log(user);
 
-    //async function to fetch reservations from API, 
-    //currently attached to click handler but we want it to load when the page renders (useEffect?)
-    const getReservations = async() => {
-
+    useEffect(() =>{
+      const getReservations = async() => {
         const response = await fetch("http://localhost:8080/reservations", {
           method : "GET",
           headers : {
@@ -25,13 +23,16 @@ function Reservations() {
         console.log(myReservations);
         setReservationsArray(myReservations);
       }
+      setTimeout(() => getReservations(), 2000);
+    }, [])
+
 
   return (
     <div>
         <h2>Reservations</h2>
-        <p>now logged in as: {user.sub} role: {user.role}</p>
-        <button onClick={getReservations}>TEST GET RESERVATIONS</button>
-        {reservationsArray.map((reservation) => {
+        <p>now logged in as: {user.sub} role: {user.roles}</p>
+        {/* <button onClick={getReservations}>TEST GET RESERVATIONS</button> */}
+        {reservationsArray.length > 0 && reservationsArray.map((reservation) => {
             return (
                 //maybe put this map logic in a function rather than the JSX
                 <div key={reservation.id} className={styles.card}>
@@ -40,6 +41,7 @@ function Reservations() {
                     <p>guest email: {reservation.guestEmail}</p>
                     <p>number of nights: {reservation.numberOfNights}</p>
                     <p>room type id: {reservation.roomTypeId}</p>
+                    <button>DELETE</button><button>EDIT</button>
                 </div>
             )
         })}
