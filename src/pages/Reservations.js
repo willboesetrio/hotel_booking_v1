@@ -26,6 +26,29 @@ function Reservations() {
       setTimeout(() => getReservations(), 2000);
     }, [])
 
+    const deleteReservation = async(id) => {
+
+      const response = await fetch(`http://localhost:8080/reservations/${id}`, {
+          method : "DELETE",
+          headers : {
+            "Content-Type" : "application/json",
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`
+          }
+        })
+        const data = await response.json();
+        console.log(data);
+        // if successful, we must remove the reservation from the state array and rerender the reservations
+        //if (response.ok) {
+        //    let currentIndex; null?
+        //    for(let i = 0; i < array.length; i++) {
+        //    if (reservationsArray[i].id == id){currentIndex = i}
+        //  }
+        //  const previousState = [...reservationsArray];
+        //  const currentState = previousState.splice(currentIndex, 1);
+        //  setReservationsArray(currentState);
+        //}
+    }
+
 
   return (
     <div>
@@ -41,7 +64,7 @@ function Reservations() {
                     <p>guest email: {reservation.guestEmail}</p>
                     <p>number of nights: {reservation.numberOfNights}</p>
                     <p>room type id: {reservation.roomTypeId}</p>
-                    <button>DELETE</button><button>EDIT</button>
+                    <button onClick={() => deleteReservation(reservation.id)}>DELETE</button><button>EDIT</button>
                 </div>
             )
         })}
