@@ -18,6 +18,7 @@ function Navbar({logout, userRole, isLogged}) {
         console.log(user.roles);
         //console.log(userRole)
         console.log("testing useEffect in navbar")
+        console.log(user);
       }
   }, [isLogged])
 
@@ -30,7 +31,7 @@ function Navbar({logout, userRole, isLogged}) {
         <Link to='/reservations' className={styles.link}>Reservations</ Link>
       </li>
       }
-      { user.roles == "manager" &&
+      { isLogged && user.roles == "manager" &&
       <li className={styles.item}>
         <Link to='/room-types' className={styles.link}>Room Types</ Link>
       </li>
