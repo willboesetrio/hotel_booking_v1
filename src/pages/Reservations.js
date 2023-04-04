@@ -30,6 +30,8 @@ function Reservations() {
 
     const deleteReservation = async(id) => {
 
+      try{
+
       const response = await fetch(`http://localhost:8080/reservations/${id}`, {
           method : "DELETE",
           headers : {
@@ -40,7 +42,9 @@ function Reservations() {
         //const data = await response.json();
         //console.log(data);
         // if successful, we must remove the reservation from the state array and rerender the reservations
-        //if (response.ok) {
+        if (response.status == 204) {
+          console.log('successful delete');
+          console.log(response.status)
            let currentIndex;
            for (let i = 0; i < reservationsArray.length; i++) {
            if (reservationsArray[i].id == id){currentIndex = i}
@@ -48,7 +52,13 @@ function Reservations() {
          const previousState = [...reservationsArray];
          previousState.splice(currentIndex, 1);
          setReservationsArray(previousState);
+        } //else {
+          //console.log("delete not succesful, AN ERROR OCCURED")
         //}
+      } catch (error) {
+        console.log(error);
+        console.log("delete not succesful, AN ERROR OCCURED")
+      }
     }
 
 
