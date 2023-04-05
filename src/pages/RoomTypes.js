@@ -25,6 +25,7 @@ function RoomTypes() {
   return (
     <div>
         <h2>Room Types</h2>
+        <button onClick={() => navigate("/room-types/create")}>CREATE ROOM TYPE</button>
         {roomTypesArray.length > 0 && roomTypesArray.map((roomType) => {
             return (
                 //maybe put this map logic in a function rather than the JSX

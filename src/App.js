@@ -32,6 +32,7 @@ function App() {
           <Route path="/reservations" element={<Reservations />} />
           <Route path="/room-types" element={<RoomTypes />} />
           <Route path="/reservations/create" element={<CreateReservation />} />
+          <Route path="/room-types/create" element={<CreateReservation />} />
           <Route path="*" element={<NotFound />} />
         </Routes> : <Login  login={login} handleUserRole={handleUserRole} />
         }
