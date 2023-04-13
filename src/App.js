@@ -12,7 +12,8 @@ import CreateReservation from './pages/CreateReservation';
 
 function App() {
 
-  const {isLogged, login, logout} = useLogin();
+  const {isLogged, invalid, login, logout} = useLogin();
+
 
   //const [user, setUser] = useState(JSON.parse(sessionStorage.getItem('user')));
   const [userRole, setUserRole] = useState("");
@@ -34,7 +35,7 @@ function App() {
           <Route path="/reservations/create" element={<CreateReservation />} />
           <Route path="/room-types/create" element={<CreateReservation />} />
           <Route path="*" element={<NotFound />} />
-        </Routes> : <Login  login={login} handleUserRole={handleUserRole} />
+        </Routes> : <Login  login={login} handleUserRole={handleUserRole} invalid={invalid}/>
         }
         
       </div>

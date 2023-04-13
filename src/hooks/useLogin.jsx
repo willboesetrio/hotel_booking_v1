@@ -5,7 +5,9 @@ import { useNavigate } from 'react-router-dom'
 function useLogin() {
 
   const [isLogged, setIsLogged] = useState(false);
+  const [invalid, setInvalid] = useState(false);
   const navigate = useNavigate();
+  
 
   const login = async(email, password) => {
 
@@ -16,7 +18,11 @@ function useLogin() {
         },
         body : JSON.stringify({email, password})
       })
-      
+      if(response.status === 400) {
+        setInvalid(true);
+        console.log('400 error from login');
+        console.log(invalid)
+      }
       if(response.ok) {
 
         const myToken = await response.json();
@@ -24,10 +30,14 @@ function useLogin() {
         const user = JSON.parse(atob(myToken.token.split('.')[1]));
         sessionStorage.setItem("token", myToken.token);
         setIsLogged(true);
+        setInvalid(false);
         navigate("/reservations");
 
       } else {
           console.log("INVALID LOGIN ATTEMPT")
+          setInvalid(true);
+        console.log('400 error from login');
+        console.log()
       }
     }
 
@@ -46,7 +56,7 @@ function useLogin() {
   }, [])
 
   return {
-   isLogged, login, logout
+   isLogged, login, logout, invalid, setInvalid
   }
 }
 
