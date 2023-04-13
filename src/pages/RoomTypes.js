@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 function RoomTypes() {
 
   const [roomTypesArray, setRoomTypesArray] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getRoomTypes= async() => {
