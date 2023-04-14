@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import styles from './Navbar.module.css';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 //ideally we would reserve our user permissions as props passed down from the main component,
 //then conditionally render certain links based on user permissions
@@ -10,8 +10,12 @@ function Navbar({logout, userRole, isLogged}) {
   const [user, setUser] = useState("");
   let [role, setRole] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
+  const [url, setUrl] = useState('');
 
   useEffect(() => {
+      setUrl(location.pathname)
+
       if (sessionStorage.getItem("token") != null) {
         setUser(JSON.parse(atob(sessionStorage.getItem("token").split('.')[1])))
         console.log(user);
@@ -20,7 +24,7 @@ function Navbar({logout, userRole, isLogged}) {
         console.log("testing useEffect in navbar")
         console.log(user);
       }
-  }, [isLogged])
+  }, [isLogged, location])
 
 
   return (
@@ -28,12 +32,12 @@ function Navbar({logout, userRole, isLogged}) {
       <h1 className={styles.companyName}>Hotel Bookings</h1>
       <ul className={styles.list}>
       { isLogged && <li className={styles.item}>
-        <Link to='/reservations' className={styles.link}>Reservations</ Link>
+        <Link to='/reservations' className={styles.link + (url === '/reservations' ? styles.active : "")}>Reservations</ Link>
       </li>
       }
       { isLogged && user.roles == "manager" &&
       <li className={styles.item}>
-        <Link to='/room-types' className={styles.link}>Room Types</ Link>
+        <Link to='/room-types' className={styles.link + (url === '/room-types' ? styles.active : "")}>Room Types</ Link>
       </li>
       }
       { isLogged &&

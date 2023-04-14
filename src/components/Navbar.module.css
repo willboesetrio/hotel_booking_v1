@@ -19,3 +19,7 @@
   .link {
     text-decoration: none;
   }
+  .active {
+    text-decoration: underline;
+    font-weight: bold;
+  }
