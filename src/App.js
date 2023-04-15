@@ -8,6 +8,7 @@ import RoomTypes from './pages/RoomTypes';
 import NotFound from './pages/NotFound';
 import useLogin from './hooks/useLogin';
 import CreateReservation from './pages/CreateReservation';
+import EditReservation from './pages/EditReservation';
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
           <Route path="/reservations" element={<Reservations />} />
           <Route path="/room-types" element={<RoomTypes />} />
           <Route path="/reservations/create" element={<CreateReservation />} />
+          <Route path="reservations/edit/:id" element={<EditReservation />} />
           <Route path="/room-types/create" element={<CreateReservation />} />
           <Route path="*" element={<NotFound />} />
         </Routes> : <Login  login={login} handleUserRole={handleUserRole} invalid={invalid}/>

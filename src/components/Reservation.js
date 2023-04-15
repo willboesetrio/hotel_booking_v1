@@ -1,9 +1,11 @@
 import React, {useState, useEffect} from 'react'
 import styles from './Reservation.module.css'
+import { useNavigate } from 'react-router-dom';
 
 function Reservation({ reservation, deleteReservation, roomTypesArray }) {
 
 const [roomRate, setRoomRate] = useState('');
+const navigate = useNavigate();
 
 useEffect(() =>{
   const matchRoomType = (room) => {
@@ -24,7 +26,7 @@ useEffect(() =>{
           <p>room type id: {reservation.roomTypeId}</p>
           <p>total cost: {roomRate * reservation.numberOfNights}</p>
           <button onClick={() => deleteReservation(reservation.id)}>DELETE</button>
-          <button>EDIT</button>
+          <button onClick={() => navigate(`/reservations/edit/${reservation.id}`)}>EDIT</button>
       </div>
   )
 }
