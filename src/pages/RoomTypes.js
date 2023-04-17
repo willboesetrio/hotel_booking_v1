@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import RoomType from '../components/RoomType';
 
 function RoomTypes() {
 
@@ -7,6 +8,13 @@ function RoomTypes() {
   const navigate = useNavigate();
 
   useEffect(() => {
+
+    const userRole = JSON.parse(atob(sessionStorage.getItem("token").split('.')[1])).roles;
+
+    if (userRole !== "manager") {
+      navigate('/reservations');
+    }
+
     const getRoomTypes= async() => {
 
       const response = await fetch("http://localhost:8080/room-types", {
@@ -31,11 +39,7 @@ function RoomTypes() {
         {roomTypesArray.length > 0 && roomTypesArray.map((roomType) => {
             return (
                 //maybe put this map logic in a function rather than the JSX
-                <div key={roomType.id}>
-                    <h3>Name: {roomType.name}</h3>
-                    <p>description: {roomType.description}</p>
-                    <button>DELETE</button><button>EDIT</button>
-                </div>
+                <RoomType key={roomType.id} roomType={roomType} />
             )
         })}
     </div>

@@ -131,7 +131,7 @@ function CreateReservation() {
         if (emailError===false && dateError===false && numberOfNightsError===false){
           console.log(payloadObject);
           console.log('VALIDATION PASSED');
-          //postNewReservation(payloadObject);
+          postNewReservation(payloadObject);
         } else {
           console.log("VALIDATION NOT PASSED")
         }

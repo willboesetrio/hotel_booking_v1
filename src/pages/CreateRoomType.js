@@ -1,19 +1,32 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 
 function CreateRoomType() {
 
+  const navigate = useNavigate();
+
+  useEffect(() => {
+
+    const userRole = JSON.parse(atob(sessionStorage.getItem("token").split('.')[1])).roles;
+
+    if (userRole !== "manager") {
+      navigate('/reservations');
+    }
+  },[])
+
+
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [rate, setRate] = useState("");
-    const [active, setActive] = useState("");
+    const [active, setActive] = useState(false);
 
     const handleCreate = () => {
         const payloadObject = {
             name: name,
             description: description,
-            rate: rate,
-            roomType: roomType
+            rate: parseInt(rate),
+            active: active
         }
         console.log(payloadObject);
     }
@@ -31,7 +44,7 @@ function CreateRoomType() {
         <input type="number" id='rate' onChange={e => setRate(e.target.value)} value={rate} required min={0}></input>
         <br /><br />
         <label htmlFor='active'>Active: </label>
-        <input type="checkbox" id="active" onChange={e => setActive(e.target.value)} value={active}></input>
+        <input type="checkbox" id="active" onChange={e => setActive(!active)} value={active}></input>
         <br /><br />
         <button onClick={() => handleCreate()}>Create Room Type</button>
     </div>

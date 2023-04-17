@@ -87,7 +87,7 @@ function Reservations() {
         {reservationsArray.length > 0 && reservationsArray.map((reservation) => {
             return (
                 //maybe put this map logic in a function rather than the JSX
-                <Reservation reservation={reservation} deleteReservation={deleteReservation} roomTypesArray={roomTypesArray}/>
+                <Reservation key={reservation.id}reservation={reservation} deleteReservation={deleteReservation} roomTypesArray={roomTypesArray}/>
             )
         })}
     </div>
