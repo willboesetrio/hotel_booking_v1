@@ -107,26 +107,6 @@ function CreateReservation() {
             roomTypeId: testArray[0].id
         }
 
-        // // check email input
-        // if(!payloadObject.guestEmail.match(emailRegEx)) {
-        //   setEmailError(true);
-        // } else {
-        //   setEmailError(false);
-        // }
-        
-        // // check date input
-        // if(!payloadObject.checkInDate.match(dateRegEx)) {
-        //   setDateError(true);
-        // } else {
-        //   setDateError(false);
-        // }
-
-        // // check number of nights
-        // if(!payloadObject.numberOfNights) {
-        //   setNumberOfNightsError(true);
-        // } else {
-        //   setNumberOfNightsError(false);
-        // }
 
         if (emailError===false && dateError===false && numberOfNightsError===false){
           console.log(payloadObject);

@@ -1,7 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
-function RoomType({roomType}) {
+function RoomType({roomType, deleteRoomType}) {
 
     const navigate = useNavigate();
 
@@ -11,7 +11,7 @@ function RoomType({roomType}) {
         <p>description: {roomType.description}</p>
         <p>rate: {roomType.rate}</p>
         {roomType.active ? <p>ACTIVE</p> : <p>INACTIVE</p>}
-        <button>DELETE</button>
+        {/* <button onClick={() => deleteRoomType(roomType.id)}>DELETE</button> */}
         <button onClick={() => navigate(`/room-types/edit/${roomType.id}`)}>EDIT</button>
     </div>
   )
