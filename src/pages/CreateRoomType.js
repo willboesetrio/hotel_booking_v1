@@ -81,7 +81,7 @@ function CreateRoomType() {
 
   return (
     <div>
-        <h4>CreateRoomType</h4>
+        <h4>Create Room Type</h4>
         {nameError == true && formClicked && <p style={{color: 'red'}}>Name must be three or more chars</p>}
         <label htmlFor='name'>Name:</label>
         <input type="text" id='name' onChange={e => setName(e.target.value)} value={name} required></input>
