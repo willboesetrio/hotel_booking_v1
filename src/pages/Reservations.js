@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import styles from "./Reservations.module.css"
 import Reservation from '../components/Reservation';
+import { Dna } from  'react-loader-spinner'
 
 
 function Reservations() {
@@ -11,22 +12,38 @@ function Reservations() {
     //ideally this user status would be on the App.js component level, then get passed down as props
     const [user, setUser] = useState(JSON.parse(atob(sessionStorage.getItem("token").split('.')[1])));
     //this console log happens twice initially(maybe due to strict mode), then way too many times(onRerender?)
+    const [loading, setLoading] = useState(true);
+    const [serverError, setServerError] = useState(false);
     console.log(user);
     const navigate = useNavigate();
 
     useEffect(() =>{
       const getReservations = async() => {
-        const response = await fetch("http://localhost:8080/reservations", {
-          method : "GET",
-          headers : {
-            "Content-Type" : "application/json",
-            Authorization: `Bearer ${sessionStorage.getItem("token")}`
+        setLoading(true);
+        try{
+          const response = await fetch("http://localhost:8080/reservations", {
+            method : "GET",
+            headers : {
+              "Content-Type" : "application/json",
+              Authorization: `Bearer ${sessionStorage.getItem("token")}`
+            }
+          })
+          const myReservations = await response.json();
+          console.log(myReservations);
+          if(response.status == 200) {
+            setReservationsArray(myReservations);
+            setLoading(false);
           }
-        })
-        const myReservations = await response.json();
-        console.log(myReservations);
-        setReservationsArray(myReservations);
-      }
+        }catch(err) {
+          setServerError(true);
+          setLoading(false);
+        }
+          //  else {
+          //   setServerError(true);
+          //   setLoading(false);
+          // }
+        }
+      
       const getRoomTypes= async() => {
 
         const response = await fetch("http://localhost:8080/room-types", {
@@ -41,7 +58,7 @@ function Reservations() {
         setRoomTypesArray(myReservations);
       }
       getRoomTypes();
-      setTimeout(() => getReservations(), 2000);
+      setTimeout(() => getReservations(), 3000);
       console.log(roomTypesArray);
     }, [])
 
@@ -83,7 +100,20 @@ function Reservations() {
     <div>
         <h2>Reservations</h2>
         <p>now logged in as: {user.sub} role: {user.roles}</p>
-        <button onClick={() => navigate("/reservations/create")}>CREATE RESERVATION</button>
+        {!loading && !serverError &&
+          <button onClick={() => navigate("/reservations/create")}>CREATE RESERVATION</button>
+        }
+        <br />
+        {loading && <
+          Dna
+            visible={true}
+            height="180"
+            width="180"
+            ariaLabel="dna-loading"
+            wrapperStyle={{}}
+            wrapperClass="dna-wrapper"
+          />}
+          {serverError && <p className={styles.err}>oops, something went wrong</p>}
         {reservationsArray.length > 0 && reservationsArray.map((reservation) => {
             return (
                 //maybe put this map logic in a function rather than the JSX
