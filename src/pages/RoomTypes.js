@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import RoomType from '../components/RoomType';
+import { Dna } from  'react-loader-spinner'
 
 function RoomTypes() {
 
   const [roomTypesArray, setRoomTypesArray] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [serverError, setServerError] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -17,16 +20,24 @@ function RoomTypes() {
 
     const getRoomTypes= async() => {
 
-      const response = await fetch("http://localhost:8080/room-types", {
-        method : "GET",
-        headers : {
-          "Content-Type" : "application/json",
-          Authorization: `Bearer ${sessionStorage.getItem("token")}`
+      try {
+        const response = await fetch("http://localhost:8080/room-types", {
+          method : "GET",
+          headers : {
+            "Content-Type" : "application/json",
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`
+          }
+        })
+        const myRoomTypes = await response.json();
+        console.log(myRoomTypes);
+        if(response.status == 200) {
+        setRoomTypesArray(myRoomTypes);
+        setLoading(false);
         }
-      })
-      const myReservations = await response.json();
-      console.log(myReservations);
-      setRoomTypesArray(myReservations);
+      } catch(err) {
+        setServerError(true);
+        setLoading(false);
+      }
     }
     setTimeout(() => getRoomTypes(), 2000);
   }, [])
@@ -44,7 +55,7 @@ function RoomTypes() {
       })
       //const data = await response.json();
       //console.log(data);
-      // if successful, we must remove the reservation from the state array and rerender the reservations
+      // if successful, remove the reservation from the state array and rerender the reservations
       if (response.status == 204) {
         console.log('successful delete');
         console.log(response.status)
@@ -55,9 +66,7 @@ function RoomTypes() {
        const previousState = [...roomTypesArray];
        previousState.splice(currentIndex, 1);
        setRoomTypesArray(previousState);
-      } //else {
-        //console.log("delete not succesful, AN ERROR OCCURED")
-      //}
+      } 
     } catch (error) {
       console.log(error);
       console.log("delete not succesful, AN ERROR OCCURED")
@@ -68,10 +77,21 @@ function RoomTypes() {
   return (
     <div>
         <h2>Room Types</h2>
-        <button onClick={() => navigate("/room-types/create")}>CREATE ROOM TYPE</button>
+        {!loading && !serverError &&
+          <button onClick={() => navigate("/room-types/create")}>CREATE ROOM TYPE</button>
+        }
+        {loading && <
+          Dna
+            visible={true}
+            height="180"
+            width="180"
+            ariaLabel="dna-loading"
+            wrapperStyle={{}}
+            wrapperClass="dna-wrapper"
+          />}
+          {serverError && <p>oops, something went wrong</p>}
         {roomTypesArray.length > 0 && roomTypesArray.map((roomType) => {
             return (
-                //maybe put this map logic in a function rather than the JSX
                 <RoomType key={roomType.id} roomType={roomType} deleteRoomType={deleteRoomType}/>
             )
         })}

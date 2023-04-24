@@ -9,9 +9,7 @@ function Reservations() {
 
     const [reservationsArray, setReservationsArray] = useState([]);
     const [roomTypesArray, setRoomTypesArray] = useState([]);
-    //ideally this user status would be on the App.js component level, then get passed down as props
     const [user, setUser] = useState(JSON.parse(atob(sessionStorage.getItem("token").split('.')[1])));
-    //this console log happens twice initially(maybe due to strict mode), then way too many times(onRerender?)
     const [loading, setLoading] = useState(true);
     const [serverError, setServerError] = useState(false);
     console.log(user);
@@ -38,10 +36,6 @@ function Reservations() {
           setServerError(true);
           setLoading(false);
         }
-          //  else {
-          //   setServerError(true);
-          //   setLoading(false);
-          // }
         }
       
       const getRoomTypes= async() => {
@@ -116,7 +110,6 @@ function Reservations() {
           {serverError && <p className={styles.err}>oops, something went wrong</p>}
         {reservationsArray.length > 0 && reservationsArray.map((reservation) => {
             return (
-                //maybe put this map logic in a function rather than the JSX
                 <Reservation key={reservation.id}reservation={reservation} deleteReservation={deleteReservation} roomTypesArray={roomTypesArray}/>
             )
         })}
