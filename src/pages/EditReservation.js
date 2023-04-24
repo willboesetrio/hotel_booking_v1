@@ -1,6 +1,11 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom';
 
+/**
+ * @name EditReservation
+ * @description form for editing a reservation
+ * @returns component
+ */
 function EditReservation() {
 
     const navigate = useNavigate();

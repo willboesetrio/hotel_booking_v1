@@ -2,6 +2,12 @@ import React, {useState, useEffect} from 'react'
 import styles from './Reservation.module.css'
 import { useNavigate } from 'react-router-dom';
 
+/**
+ * @name Reservation
+ * @description displays an individual reservations
+ * @param {*} props reservation, deleteReservation, roomTypesArray
+ * @returns component
+ */
 function Reservation({ reservation, deleteReservation, roomTypesArray }) {
 
 const [roomRate, setRoomRate] = useState('');

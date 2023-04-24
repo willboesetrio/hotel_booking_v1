@@ -1,7 +1,11 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 
-
+/**
+ * @name CreateRoomType
+ * @description form for creating a room type
+ * @returns component
+ */
 function CreateRoomType() {
 
   const navigate = useNavigate();
@@ -42,6 +46,11 @@ function CreateRoomType() {
       }
   },[rate])
 
+      /**
+     * @name postNewRoomType
+     * @description fetch call to create new room type
+     * @param {*} payloadObject 
+     */
   const postNewRoomType = async (payloadObject) => {
 
     const response = await fetch("http://localhost:8080/room-types", {
@@ -60,7 +69,10 @@ function CreateRoomType() {
 
   }
 
-
+        /**
+     * @name handleCreate
+     * @description checks validation and calls postNewRoomType
+     */
     const handleCreate = () => {
         setFormClicked(true);
         const payloadObject = {

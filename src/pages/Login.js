@@ -1,5 +1,11 @@
 import { useState } from 'react';
 
+/**
+ * @name Login
+ * @description initial login form
+ * @param {*} props login, invalid 
+ * @returns component
+ */
 function Login({login, invalid}) {
 
     const [email, setEmail] = useState("");

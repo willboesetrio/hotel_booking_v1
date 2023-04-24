@@ -1,6 +1,12 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
+/**
+ * @name RoomType
+ * @description displays an individual room type
+ * @param {*} props roomType, deleteRoomType
+ * @returns component
+ */
 function RoomType({roomType, deleteRoomType}) {
 
     const navigate = useNavigate();

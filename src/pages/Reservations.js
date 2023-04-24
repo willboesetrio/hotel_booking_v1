@@ -4,7 +4,11 @@ import styles from "./Reservations.module.css"
 import Reservation from '../components/Reservation';
 import { Dna } from  'react-loader-spinner'
 
-
+/**
+ * @name Reservations
+ * @description displays all reservations
+ * @returns component
+ */
 function Reservations() {
 
     const [reservationsArray, setReservationsArray] = useState([]);
@@ -38,6 +42,10 @@ function Reservations() {
         }
         }
       
+      /**
+       * @name getRoomTypes
+       * @description fetch call to get room types
+       */
       const getRoomTypes= async() => {
 
         const response = await fetch("http://localhost:8080/room-types", {
@@ -56,6 +64,11 @@ function Reservations() {
       console.log(roomTypesArray);
     }, [])
 
+    /**
+     * @name deleteReservation
+     * @description deletes an individual reservation
+     * @param {*} id 
+     */
     const deleteReservation = async(id) => {
 
       try{

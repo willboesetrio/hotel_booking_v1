@@ -1,6 +1,11 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom';
 
+/**
+ * @name EditRoomType
+ * @description form for editing a room type
+ * @returns component
+ */
 function EditRoomType() {
 
   const navigate = useNavigate();

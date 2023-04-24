@@ -2,8 +2,12 @@ import { useState, useEffect } from 'react';
 import styles from './Navbar.module.css';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 
-//ideally we would reserve our user permissions as props passed down from the main component,
-//then conditionally render certain links based on user permissions
+/**
+ * @name Navbar
+ * @description displays the navbar and appropriate links
+ * @param {*} props logout, userRole, isLogged
+ * @returns component
+ */
 function Navbar({logout, userRole, isLogged}) {
 
   //const [user, setUser] = useState(JSON.parse(atob(sessionStorage.getItem("token").split('.')[1])));
@@ -21,8 +25,6 @@ function Navbar({logout, userRole, isLogged}) {
         console.log(user);
         console.log(user.roles);
         //console.log(userRole)
-        console.log("testing useEffect in navbar")
-        console.log(user);
       }
   }, [isLogged, location])
 

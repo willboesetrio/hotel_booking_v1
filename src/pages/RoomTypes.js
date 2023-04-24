@@ -3,6 +3,11 @@ import { useNavigate } from 'react-router-dom'
 import RoomType from '../components/RoomType';
 import { Dna } from  'react-loader-spinner'
 
+/**
+ * @name RoomTypes
+ * @description displays all room types
+ * @returns component
+ */
 function RoomTypes() {
 
   const [roomTypesArray, setRoomTypesArray] = useState([]);
@@ -18,6 +23,10 @@ function RoomTypes() {
       navigate('/reservations');
     }
 
+    /**
+     * @name getRoomTypes
+     * @description fetch call to get room types
+     */
     const getRoomTypes= async() => {
 
       try {

@@ -1,3 +1,8 @@
+/**
+ * @name NotFound
+ * @description custom 404 page
+ * @returns component
+ */
 function NotFound() {
 
     return(

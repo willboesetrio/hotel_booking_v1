@@ -2,6 +2,11 @@ import React, { useState } from 'react'
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'
 
+/**
+ * @name useLogin
+ * @description custom hook to handle login state
+ * @returns isLogged, login, logout, invalid, setInvalid
+ */
 function useLogin() {
 
   const [isLogged, setIsLogged] = useState(false);

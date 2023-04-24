@@ -1,6 +1,11 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 
+/**
+ * @name CreateReservation
+ * @description form for creating a reservation
+ * @returns component
+ */
 function CreateReservation() {
 
     const navigate = useNavigate();
@@ -27,6 +32,11 @@ function CreateReservation() {
     // get token from session storage
     const token = sessionStorage.getItem('token');
 
+    /**
+     * @name postNewReservation
+     * @description fetch call to create new reservation
+     * @param {*} payloadObject 
+     */
     const postNewReservation = async (payloadObject) => {
 
       const response = await fetch("http://localhost:8080/reservations", {
@@ -88,6 +98,10 @@ function CreateReservation() {
         getRoomTypes();
     }, [])
 
+    /**
+     * @name handleCreate
+     * @description checks validation and calls postNewReservation
+     */
     const handleCreate = () => {
 
         setFormClicked(true);
