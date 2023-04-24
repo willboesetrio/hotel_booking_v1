@@ -10,6 +10,13 @@ Node v16^, PostgreSQL, hotel_API(backend from catalyte.io), Visual Studio Code(R
 
 Download the repository and run npm install in bash to download dependencies. Run the file HotelApplicationAPI.java in the hotel_API. Ensure postgres database is configured to run on port 5432. Run npm start in bash to start the development server.
 
+Users in the database available to login:
+Manager
+email: manager@hotelapi.com password: password
+
+Employee
+email: employee@hotelapi.com password: password
+
 ## Available Scripts
 
 In the project directory, you can run:
